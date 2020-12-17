@@ -1,4 +1,60 @@
+<?php
 
+$error = '';
+$name = '';
+$email = '';
+$message = '';
+
+function clean_text($string) {
+    $string=trim($string);
+    $string=stripslashes($string);
+    $string=htmlspecialchars($string);
+    return $string
+}
+
+if(isset($_POST["submit"])) {
+    if(empty($_POST["name"])) {
+        $error .= '<p><label class="text danger">Please enter your name<label></p>';
+    } else {
+        $name = clean_text($_POST["name"]);
+        if(!preg_match("/^[a-zA-Z ]*$/",$name)) {
+            $error .= '<p><label class="text-danger">Only letters and white space allowed</label></p>';
+        }
+    }
+    if(empty($_POST["email"])) {
+        $error .= '<p><label class="text danger">Please enter your email<label></p>';
+    } else {
+        $email = clean_text($_POST["email"]);
+        if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $error .= '<p><label class="text-danger">Invalid email format</label></p>';
+        }
+    }
+    if(empty($_POST["message"])) {
+        $error .= '<p><label class="text danger">Message is required</label></p>';
+    } else {
+        $message = clean_text($_POST["message"]);
+    }
+    if($error == '') {
+        $file_open = fopen("Contact.csv", "a");
+        $no_rows = count(file("Contact.csv"));
+        if($no_rows > 1) {
+            $no_rows = ($no_rows - 1) + 1;
+        }
+        $form_data = array(
+            'sr_no' => $no_rows,
+            'name' => $name,
+            'email' => $email,
+            'message' => $message
+        );
+        fputcsv($file_open, $form_data);
+        $error = '<label class="text success">Thank you for contacting me</label>';
+        $name = '';
+        $email = '';
+        $message = '';
+    }
+}
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -40,7 +96,7 @@
                 <section class="intro">
                     <h1 class="display-5 mb-5">Riley Alexander's Portfolio</h1>
                     <p>
-                        In October 2020 I started my path to becoming a career changer. In this short time, with the help of <a href="https://www.launchcode.org/">LaunchCode</a>'s LC101 bootcamp I have learned JavaScript, CSS, HTML, TypeScript and Angular. Soon we are diving into Java and I'm excited to never stop learning. Over the past 2 years I've been very involved with a few non-profits and learned the importance of knowing what you dont know. This has already helped me being able to understand this field is a lifetime of learning in a constantly changing industry. My past experience was mostly in customer service and I have been able to work on my soft skills for the last 20 years, <b>Let me put all of this to work for you.</b>
+                        In October 2020 I started my path to becoming a career changer. In this short time, with the help of <a href="https://www.launchcode.org/">LaunchCode</a>'s LC101 bootcamp I have learned JavaScript, CSS, HTML, TypeScript and Angular. Soon we are diving into Java and I'm excited to never stop learning. Over the past 2 years I've been very involved with a few non-profits and learned the importance of knowing what you don't know. This has already helped me being able to understand this field is a lifetime of learning in a constantly changing industry. My past experience was mostly in customer service and I have been able to work on my soft skills for the last 20 years, <b>Let me put all of this to work for you.</b>
                     </p>
                 </section>
                 <section class="projects">
@@ -93,10 +149,11 @@
                     <h2 class="display-6">Contact Me:</h2>
                     <div class="container-fluid">
                         <div class="row">
+                            <?php echo $error; ?>
                             <form action="ContactMe.xlsx" method="post">
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="Name" class="form-label">Name:</label>
+                                    <label for="Name" class="form-label" value=<?php echo $name;?>>Name:</label>
                                     <input
                                         type="text"
                                         class="form-control"
@@ -106,7 +163,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="email" class="form-label">Email address:</label>
+                                    <label for="email" class="form-label" value=<?php echo $email;?>>Email address:</label>
                                     <input 
                                         type="email"
                                         class="form-control"
@@ -116,7 +173,7 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="mb-3">
-                                    <label for="message" class="form-label">Message:</label>
+                                    <label for="message" class="form-label" value=<?php echo $message;?>>Message:</label>
                                     <textarea class="form-control" id="message" rows="3"></textarea>
                                 </div>
                             </div>
