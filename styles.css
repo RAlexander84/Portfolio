@@ -1,0 +1,58 @@
+body,
+html {
+  height: 100%;
+}
+
+body {
+  font-weight: 200;
+  font-size: 1.5rem;
+  color: #444;
+}
+
+.intro-left {
+  background: url(images/image.jpg);
+  position: fixed;
+  left: 0;
+  width: 33%;
+  height: 100%;
+  color: blueviolet;
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .intro-left {
+    height: 30vh;
+    position: relative;
+    width: 100%;
+  }
+}
+
+.avatar {
+  width: 10rem;
+  height: 10rem;
+  border-radius: 50%;
+  margin: 1rem;
+}
+
+.full-height {
+  height: 100%;
+}
+
+.quote {
+  float: right;
+}
+
+section {
+  margin: 5rem;
+  font-size: 1.2rem;
+}
+
+button {
+  float: right;
+}
+
+footer {
+  background-color: violet;
+  font-size: small;
+  color: white;
+}
