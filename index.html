@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="bootstrap.min.css" />
     <link rel="stylesheet" href="styles.css" />
-    <link rel="php" href="index.php" />
-    <link rel="csv" href="Contact.csv" />
     <title>Riley Alexander's Portfolio</title>
 </head>
 <body>
@@ -93,11 +91,10 @@
                     <h2 class="display-6">Contact Me:</h2>
                     <div class="container-fluid">
                         <div class="row">
-                            <?php echo $error; ?>
-                            <form action="ContactMe.xlsx" method="post">
+                            <form action="/GitHub Repositories/Portfolio/Contact.csv" method="post">
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="Name" class="form-label" value=<?php echo $name;?>>Name:</label>
+                                    <label for="Name" class="form-label">Name:</label>
                                     <input
                                         type="text"
                                         class="form-control"
@@ -107,7 +104,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="email" class="form-label" value=<?php echo $email;?>>Email address:</label>
+                                    <label for="email" class="form-label">Email address:</label>
                                     <input 
                                         type="email"
                                         class="form-control"
@@ -117,13 +114,12 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="mb-3">
-                                    <label for="message" class="form-label" value=<?php echo $message;?>>Message:</label>
+                                    <label for="message" class="form-label">Message:</label>
                                     <textarea class="form-control" id="message" rows="3"></textarea>
                                 </div>
                             </div>
-                            <button type="button" class="btn btn-outline-info">Send</button>
+                            <input type="submit" class="btn btn-outline-info"></button>
                             </form>
-                            
                         </div>
                     </div>
                 </section>
